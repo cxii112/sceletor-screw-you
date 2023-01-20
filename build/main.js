@@ -10,6 +10,39 @@ const INTENTS = [
     discord_js_1.IntentsBitField.Flags.GuildPresences,
     discord_js_1.IntentsBitField.Flags.Guilds
 ];
+if (require.main === module) {
+    main().finally();
+}
+async function main() {
+    try {
+        const { GUILD, CHANNEL } = await prepare();
+        let membersOfGuild = await getMembersOfGuilds(GUILD);
+        let screwedIndex = Math.floor(Math.random() * membersOfGuild.length);
+        let screwed = membersOfGuild[screwedIndex];
+        let mention = (0, discord_js_1.userMention)(screwed.id);
+        let textChannel = CHANNEL;
+        await textChannel.send({
+            content: `${mention}`,
+            files: [{
+                    attachment: "misc/screw-you.jpg",
+                    name: "screw-you.jpg",
+                    description: "ПОШЕЛ НА ХУЙ"
+                }]
+        });
+        return textChannel.send({
+            files: [{
+                    attachment: "misc/ill-be-back-again.jpg",
+                    name: "ill-be-back-again.jpg",
+                    description: "СКЕЛЕТОР ВЕРНЕТСЯ ПОЗЖЕ И ЕЩЕ РАЗ ПОШЛЕТ ТЕБЯ НА ХУЙ"
+                }]
+        });
+        // return;
+    }
+    catch (e) {
+        console.error(e.message);
+        process.exit(1);
+    }
+}
 async function prepare() {
     const { DISCORD_TOKEN, GUILD_ID, CHANNEL_ID, } = (0, config_1.load)();
     if (DISCORD_TOKEN === undefined ||
@@ -46,33 +79,3 @@ async function getMembersOfGuilds(guild) {
     guild.members.cache.map(member => membersOfGuild.push(member));
     return membersOfGuild;
 }
-async function main() {
-    try {
-        const { GUILD, CHANNEL } = await prepare();
-        let membersOfGuild = await getMembersOfGuilds(GUILD);
-        let screwedIndex = Math.floor(Math.random() * membersOfGuild.length);
-        let screwed = membersOfGuild[screwedIndex];
-        let mention = (0, discord_js_1.userMention)(screwed.id);
-        let textChannel = CHANNEL;
-        await textChannel.send({
-            content: `${mention}`,
-            files: [{
-                    attachment: "misc/screw-you.jpg",
-                    name: "screw-you.jpg",
-                    description: "Screw You"
-                }]
-        });
-        await textChannel.send({
-            files: [{
-                    attachment: "misc/ill-be-back-again.jpg",
-                    name: "ill-be-back-again.jpg",
-                    description: "I'll be back"
-                }]
-        });
-    }
-    catch (e) {
-        console.error(e.message);
-        process.exit(1);
-    }
-}
-exports.default = main;
