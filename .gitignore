@@ -881,3 +881,4 @@ dist
 # Windows shortcuts
 
 !/build/
+!/misc/
