@@ -51,6 +51,8 @@ async function prepare() {
         throw new Error("Env variables must be defined.");
     const BOT = new discord_js_1.Client({ intents: INTENTS });
     BOT.once("ready", (...args) => {
+        if (!BOT.user)
+            throw new Error("No user exists.");
         let name = BOT.user.username;
         let timestamp = new Date(BOT.readyTimestamp || 0);
         console.log(`Bot ${name} is ready at ${timestamp.toISOString()}`);
@@ -62,7 +64,7 @@ async function prepare() {
     if (GUILD === undefined)
         throw new Error(`No guild w/ id ${GUILD_ID}`);
     const CHANNEL = await GUILD.channels.fetch(CHANNEL_ID);
-    if (CHANNEL === undefined)
+    if (CHANNEL === undefined || CHANNEL === null)
         throw new Error(`No channel w/ id ${CHANNEL_ID}`);
     if (!CHANNEL.isTextBased())
         throw new Error(`channel ${CHANNEL?.name} (${CHANNEL?.id}) isn't text channel.`);
