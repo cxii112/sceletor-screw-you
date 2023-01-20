@@ -879,12 +879,3 @@ dist
 # Windows Installer files
 
 # Windows shortcuts
-
-!/build/
-!/misc/
-!/misc/
-!/misc/
-!/misc/ill-be-back-again.jpg
-!/misc/screw-you.jpg
-/misc/ill-be-back-again.jpg
-/misc/screw-you.jpg
