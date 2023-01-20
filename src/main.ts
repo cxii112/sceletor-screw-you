@@ -57,7 +57,7 @@ async function getMembersOfGuilds(guild: Guild) {
     return membersOfGuild;
 }
 
-export default async function main() {
+async function main() {
 
     try {
         const {
